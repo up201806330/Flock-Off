@@ -1,0 +1,52 @@
+{
+    "name": "PlayerControls",
+    "maps": [
+        {
+            "name": "Gameplay",
+            "id": "57759c1d-9a7d-400c-a795-355f4a71a020",
+            "actions": [
+                {
+                    "name": "Shout",
+                    "type": "Button",
+                    "id": "618c4646-7c1a-4e7c-9618-14685cc5b4ac",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Move",
+                    "type": "PassThrough",
+                    "id": "22b4ed98-190d-4b54-8780-c1c27907d822",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8780747a-5e40-45b1-9b7b-7625e2c9de7d",
+                    "path": "<HID::MY-POWER CO.,LTD. 2In1 USB Joystick>/button3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shout",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6e4fcb78-052b-460d-9432-e8297fdf50be",
+                    "path": "<Joystick>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

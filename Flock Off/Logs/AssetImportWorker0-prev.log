@@ -1,0 +1,172 @@
+Using pre-set license
+Built from '2020.2/release' branch; Version is '2020.2.2f1 (068178b99f32) revision 426360'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Pro; OS build 18362.1082; Version 1903; 64bit' Language: 'en' Physical Memory: 16303 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2020.2.2f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+C:/Users/Rafael/Documents/GitHub/GGJ2021/Flock Off
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+63044
+Successfully changed project path to: C:/Users/Rafael/Documents/GitHub/GGJ2021/Flock Off
+C:/Users/Rafael/Documents/GitHub/GGJ2021/Flock Off
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 144.01 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.2.2f1 (068178b99f32)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.2.2f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/Rafael/Documents/GitHub/GGJ2021/Flock Off/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 1050 (ID=0x1c8d)
+    Vendor:   
+    VRAM:     1979 MB
+    Driver:   27.21.14.6109
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.2.2f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.2.2f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.2.2f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56340
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.2.2f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.2.2f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002720 seconds.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 75.34 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  2.525 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.002506 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 94.08 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.554 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
+Refreshing native plugins compatible for Editor in 0.89 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2397 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 112.1 MB.
+System memory in use after: 110.1 MB.
+
+Unloading 45 unused Assets to reduce memory usage. Loaded Objects now: 2804.
+Total: 8.843200 ms (FindLiveObjects: 0.657800 ms CreateObjectMapping: 0.469900 ms MarkObjects: 5.035100 ms  DeleteObjects: 2.676800 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/Objs/Mesh_Beagle.obj
+  artifactKey: Guid(5713fb94bc0c2884090dc0d9282fff66) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Objs/Mesh_Beagle.obj using Guid(5713fb94bc0c2884090dc0d9282fff66) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3697eef58f32248f73683243bfe1d338') in 0.939816 seconds
+  Import took 0.946914 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 12.098725 seconds.
+  path: Assets/Objs
+  artifactKey: Guid(669cb945419fcad46aab88edd1e2d351) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Objs using Guid(669cb945419fcad46aab88edd1e2d351) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'efebcfb6e82a6a00d355804e58bc11f5') in 0.005763 seconds
+  Import took 0.025484 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.024225 seconds.
+  path: Assets/Objs
+  artifactKey: Guid(669cb945419fcad46aab88edd1e2d351) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Objs using Guid(669cb945419fcad46aab88edd1e2d351) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'efebcfb6e82a6a00d355804e58bc11f5') in 0.004716 seconds
+  Import took 0.036740 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.097076 seconds.
+  path: Assets/Objs/Tex_Beagle.png
+  artifactKey: Guid(643dca4a4b1a30f4fb089c773cb26311) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Objs/Tex_Beagle.png using Guid(643dca4a4b1a30f4fb089c773cb26311) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8827172b5a3778b5aa9da12d9e553f5e') in 0.057156 seconds
+  Import took 0.065566 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.061214 seconds.
+  path: Assets/Objs/Tex_Beagle.png
+  artifactKey: Guid(643dca4a4b1a30f4fb089c773cb26311) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Objs/Tex_Beagle.png using Guid(643dca4a4b1a30f4fb089c773cb26311) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8827172b5a3778b5aa9da12d9e553f5e') in 0.011027 seconds
+  Import took 0.021720 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 138.185355 seconds.
+  path: Assets/Objs/Mesh_Beagle.obj
+  artifactKey: Guid(5713fb94bc0c2884090dc0d9282fff66) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Objs/Mesh_Beagle.obj using Guid(5713fb94bc0c2884090dc0d9282fff66) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '99b1e39337b969028b813093e3db02b9') in 0.043518 seconds
+  Import took 0.054094 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001373 seconds.
+  path: Assets/Objs/Mesh_Beagle.obj
+  artifactKey: Guid(5713fb94bc0c2884090dc0d9282fff66) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Objs/Mesh_Beagle.obj using Guid(5713fb94bc0c2884090dc0d9282fff66) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '99b1e39337b969028b813093e3db02b9') in 0.043188 seconds
+  Import took 0.053840 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 78.311278 seconds.
+  path: Assets/Objs/Mesh_Beagle.mtl
+  artifactKey: Guid(55daa79fca3c97f479f1a417da3d682d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Objs/Mesh_Beagle.mtl using Guid(55daa79fca3c97f479f1a417da3d682d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f391914189d88e4ed76717d535e00f8f') in 0.017912 seconds
+  Import took 0.028416 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003109 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 80.81 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.666 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 0.73 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2618 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 124.0 MB.
+System memory in use after: 121.2 MB.
+
+Unloading 97 unused Assets to reduce memory usage. Loaded Objects now: 3126.
+Total: 8.495700 ms (FindLiveObjects: 0.846900 ms CreateObjectMapping: 0.309000 ms MarkObjects: 3.078200 ms  DeleteObjects: 4.259200 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:srp/default-shader: 0000e00a000e0de00000e000e0000000 -> 00a0da0d000000000000000000000000
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
