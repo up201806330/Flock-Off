@@ -12,12 +12,15 @@ public class Sheep : MonoBehaviour
 
     [SerializeField]
     GameObject player;
+    [Header("Stats")]
     [SerializeField]
     float range;
     [SerializeField]
     float hitDistance;
 
-    bool scared = true;
+    public int nNeighbors;
+
+    bool scared = false;
 
     // Start is called before the first frame update
     void Start()
@@ -30,8 +33,21 @@ public class Sheep : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float distance = Vector3.Distance(transform.position, player.transform.position);
+        // Calculating neighbor sheep
+        nNeighbors = 0;
+        Vector3 sumDestination = Vector3.zero;
+        foreach (Collider x in Physics.OverlapSphere(transform.position, range * 0.8f)) {
+            if (x.GetComponent<Sheep>() != null) {
+                nNeighbors++;
+                sumDestination += x.GetComponent<NavMeshAgent>().destination;
+            }
+        }
+        if (nNeighbors > 1) {
+            sumDestination /= nNeighbors;
+            navMeshAgent.destination = sumDestination;
+        }
 
+        float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= range) {
             Vector3 dirToPlayer = transform.position - player.transform.position;
             Vector3 newPos = transform.position + dirToPlayer;
@@ -46,7 +62,7 @@ public class Sheep : MonoBehaviour
         NavMeshHit hit;
         NavMesh.FindClosestEdge(transform.position, out hit, NavMesh.AllAreas);
 
-        if (hit.distance <= hitDistance) {
+        if (hit.distance <= hitDistance && scared) {
             navMeshAgent.enabled = false;               // Disable AI
             rb.constraints = RigidbodyConstraints.None; // Enable "ragdoll"
             Debug.Log("Ive fallen");
