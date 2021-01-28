@@ -17,10 +17,14 @@ public class Sheep : MonoBehaviour
     float range;
     [SerializeField]
     float hitDistance;
+    [SerializeField]
+    float pushForce;
 
     public int nNeighbors;
 
+    [SerializeField]
     bool scared = false;
+    bool dead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +37,8 @@ public class Sheep : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (dead) return;
+
         // Calculating neighbor sheep
         nNeighbors = 0;
         Vector3 sumDestination = Vector3.zero;
@@ -50,22 +56,24 @@ public class Sheep : MonoBehaviour
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if (distance <= range) {
             Vector3 dirToPlayer = transform.position - player.transform.position;
-            Vector3 newPos = transform.position + dirToPlayer;
-            navMeshAgent.SetDestination(newPos / 1.5f);
+            Vector3 newPos = transform.position + dirToPlayer * 0.75f;
+
+            if (Vector3.Distance(newPos, transform.position) > 5) newPos = transform.position;
+
+            navMeshAgent.SetDestination(newPos);
             if (!animator.GetBool(wlkHash)) animator.SetBool(wlkHash, true);
         }
         else {
             animator.SetBool(wlkHash, false);
         }
-
-        // Seeing if it will fall off edge
-        NavMeshHit hit;
-        NavMesh.FindClosestEdge(transform.position, out hit, NavMesh.AllAreas);
-
-        if (hit.distance <= hitDistance && scared) {
-            navMeshAgent.enabled = false;               // Disable AI
-            rb.constraints = RigidbodyConstraints.None; // Enable "ragdoll"
-            Debug.Log("Ive fallen");
+    }
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.tag == "Edge" && scared && !dead) {
+            navMeshAgent.enabled = false;                // Disable AI
+            rb.constraints = RigidbodyConstraints.None;  // Enable "ragdoll"
+            rb.velocity = transform.forward * pushForce; // Apply push
+            //Debug.Log(rb.velocity);
+            dead = true;
         }
     }
 }

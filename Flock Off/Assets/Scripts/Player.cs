@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField]
-    float moveSpeed = 1f;
+    float moveSpeed;
     [SerializeField]
     float rotSpeed = 1f;
 

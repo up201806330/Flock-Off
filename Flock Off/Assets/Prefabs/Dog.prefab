@@ -49,9 +49,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shout: {fileID: 5051579473687974869}
   cooldown: 0
-  cooldownAmount: 2
+  cooldownAmount: 1
   factor: 1
-  moveSpeed: 3
+  moveSpeed: 6
   rotSpeed: 6.5
 --- !u!136 &5394108481496703356
 CapsuleCollider:
