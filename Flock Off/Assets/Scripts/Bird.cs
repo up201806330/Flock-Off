@@ -230,6 +230,7 @@ public class Bird : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "Entity" && other.GetComponent<Sheep>() != null && state == State.idle) {
+            area.add(other);
             state = State.danger;
             stateTimer = 0;
             // [SFX] First cackawww~~~ 

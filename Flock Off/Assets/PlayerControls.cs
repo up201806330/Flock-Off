@@ -93,7 +93,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6f60b889-65af-4b2d-aa0f-d6586725e080"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""path"": ""<Keyboard>/b"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

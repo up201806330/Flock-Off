@@ -4,15 +4,46 @@ using UnityEngine;
 
 public class Bear : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    Animator animator;
+    int attackingHsh = Animator.StringToHash("attacking");
+
+    Collider hitbox;
+
+    GameObject obj;
+    GameObject targetSheep;
+
+    [Header("Stats")]
+    [SerializeField]
+    float cooldownTime;
+    float counter = 0;
+
+    private void Awake() {
+        obj = transform.GetChild(0).gameObject;
+        animator = obj.GetComponent<Animator>();
+        hitbox = GetComponent<Collider>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void Update() {
+        if (counter > 0) counter -= Time.deltaTime;
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.tag == "Entity" && other.GetComponent<Sheep>() != null) {
+            if (counter <= 0 && !animator.GetBool(attackingHsh)) {
+                counter = cooldownTime;
+                animator.SetBool(attackingHsh, true);
+                targetSheep = other.gameObject;
+            }
+        }
+    }
+
+    public void resetAttacking() {
+        animator.SetBool(attackingHsh, false);
+        Destroy(targetSheep);
+    }
+
+    public void grabSheep() {
+        targetSheep.transform.SetParent(obj.transform);
+        targetSheep.GetComponent<Sheep>().kill(false);
     }
 }
