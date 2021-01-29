@@ -15,24 +15,25 @@ public class Player : MonoBehaviour
 
     [Header("Shout")]
     [SerializeField]
-    GameObject shout;
-    Renderer rnd;
-    [SerializeField]
     float cooldown = 0f;
     [SerializeField]
     float cooldownAmount;
     [SerializeField]
     float factor;
+    [SerializeField]
+    float shakeTime; 
+    [SerializeField]
+    float shakeAmount;
+    [SerializeField]
+    float shoutRadius;
 
     [Header("Movement")]
     [SerializeField]
-    float moveSpeed = 1f;
+    float moveSpeed;
     [SerializeField]
     float rotSpeed = 1f;
 
     private void Awake() {
-        rnd = shout.GetComponentInChildren<Renderer>();
-
         controls = new PlayerControls();
         animator = GetComponentInChildren<Animator>();
 
@@ -45,20 +46,14 @@ public class Player : MonoBehaviour
         if (cooldown > 0) cooldown -= Time.deltaTime;
         else cooldown = 0;
 
-        if (rnd.material.color.a >= 0) {
-            Color newC = new Color(rnd.material.color.r, rnd.material.color.g, rnd.material.color.b, rnd.material.color.a - Time.deltaTime * factor);
-            rnd.material.color = newC;
-        }
-
         if (move == Vector2.zero) {
             animator.SetBool(walkingHsh, false);
             return;
         }
         else animator.SetBool(walkingHsh, true);
-        Vector3 m = new Vector3(-move.x, 0, -move.y) * Time.deltaTime * moveSpeed;
-        transform.Translate(m, Space.World);
-
         Vector3 l = new Vector3(-move.x, 0, -move.y);
+        transform.Translate(l * Time.deltaTime * moveSpeed, Space.World);
+
         Quaternion targetL = Quaternion.LookRotation(l, Vector3.up);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetL, Time.deltaTime * rotSpeed);
     }
@@ -66,7 +61,10 @@ public class Player : MonoBehaviour
     void Shout() {
         if (cooldown == 0) {
             animator.SetBool(shoutHsh, true);
-            rnd.material.color = new Color(rnd.material.color.r, rnd.material.color.g, rnd.material.color.b, 0.5f);
+            CameraShake.Shake(shakeTime, shakeAmount);
+            //foreach(Collider x in Physics.OverlapSphere(transform.position, shoutRadius)) {
+            //    if (x.gameObject.tag == "Entity") x.GetComponent<Rigidbody>().AddForce(x.transform.position - transform.position, ForceMode.Impulse);
+            //} 
             cooldown = cooldownAmount;
         }
     }
