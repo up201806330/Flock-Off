@@ -33,6 +33,38 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""MoveN"",
+                    ""type"": ""Button"",
+                    ""id"": ""818e9385-3839-44b3-ad7f-626ca08d40c0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""MoveS"",
+                    ""type"": ""Button"",
+                    ""id"": ""d7c252e9-410e-4644-93d2-f866360a3c98"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""MoveE"",
+                    ""type"": ""Button"",
+                    ""id"": ""e6f1cd3a-438c-4ee7-a96c-97049a72cf4b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""MoveW"",
+                    ""type"": ""Button"",
+                    ""id"": ""15ac70bc-309d-4d30-b47f-9bacde08c55f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -51,6 +83,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""6d76644f-3c4a-4203-aa64-52bdd177c019"",
                     ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shout"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6f60b889-65af-4b2d-aa0f-d6586725e080"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -79,6 +122,50 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""83dbab38-7296-4369-b9ca-02211d5f3c3d"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveN"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b7fa211b-7702-4591-b69a-82da73946176"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveS"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3a295d9c-c4cc-4e8e-b6cd-7397d624501a"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveE"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""98267860-0930-4ba4-8000-17d5d0a3d662"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveW"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -89,6 +176,10 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Shout = m_Gameplay.FindAction("Shout", throwIfNotFound: true);
         m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
+        m_Gameplay_MoveN = m_Gameplay.FindAction("MoveN", throwIfNotFound: true);
+        m_Gameplay_MoveS = m_Gameplay.FindAction("MoveS", throwIfNotFound: true);
+        m_Gameplay_MoveE = m_Gameplay.FindAction("MoveE", throwIfNotFound: true);
+        m_Gameplay_MoveW = m_Gameplay.FindAction("MoveW", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -140,12 +231,20 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_Shout;
     private readonly InputAction m_Gameplay_Move;
+    private readonly InputAction m_Gameplay_MoveN;
+    private readonly InputAction m_Gameplay_MoveS;
+    private readonly InputAction m_Gameplay_MoveE;
+    private readonly InputAction m_Gameplay_MoveW;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
         public GameplayActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Shout => m_Wrapper.m_Gameplay_Shout;
         public InputAction @Move => m_Wrapper.m_Gameplay_Move;
+        public InputAction @MoveN => m_Wrapper.m_Gameplay_MoveN;
+        public InputAction @MoveS => m_Wrapper.m_Gameplay_MoveS;
+        public InputAction @MoveE => m_Wrapper.m_Gameplay_MoveE;
+        public InputAction @MoveW => m_Wrapper.m_Gameplay_MoveW;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -161,6 +260,18 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Move.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMove;
+                @MoveN.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveN;
+                @MoveN.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveN;
+                @MoveN.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveN;
+                @MoveS.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveS;
+                @MoveS.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveS;
+                @MoveS.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveS;
+                @MoveE.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveE;
+                @MoveE.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveE;
+                @MoveE.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveE;
+                @MoveW.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveW;
+                @MoveW.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveW;
+                @MoveW.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveW;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -171,6 +282,18 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @MoveN.started += instance.OnMoveN;
+                @MoveN.performed += instance.OnMoveN;
+                @MoveN.canceled += instance.OnMoveN;
+                @MoveS.started += instance.OnMoveS;
+                @MoveS.performed += instance.OnMoveS;
+                @MoveS.canceled += instance.OnMoveS;
+                @MoveE.started += instance.OnMoveE;
+                @MoveE.performed += instance.OnMoveE;
+                @MoveE.canceled += instance.OnMoveE;
+                @MoveW.started += instance.OnMoveW;
+                @MoveW.performed += instance.OnMoveW;
+                @MoveW.canceled += instance.OnMoveW;
             }
         }
     }
@@ -179,5 +302,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     {
         void OnShout(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
+        void OnMoveN(InputAction.CallbackContext context);
+        void OnMoveS(InputAction.CallbackContext context);
+        void OnMoveE(InputAction.CallbackContext context);
+        void OnMoveW(InputAction.CallbackContext context);
     }
 }

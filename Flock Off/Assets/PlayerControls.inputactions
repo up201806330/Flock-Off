@@ -20,6 +20,38 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "MoveN",
+                    "type": "Button",
+                    "id": "818e9385-3839-44b3-ad7f-626ca08d40c0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MoveS",
+                    "type": "Button",
+                    "id": "d7c252e9-410e-4644-93d2-f866360a3c98",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MoveE",
+                    "type": "Button",
+                    "id": "e6f1cd3a-438c-4ee7-a96c-97049a72cf4b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MoveW",
+                    "type": "Button",
+                    "id": "15ac70bc-309d-4d30-b47f-9bacde08c55f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -47,6 +79,17 @@
                 },
                 {
                     "name": "",
+                    "id": "6f60b889-65af-4b2d-aa0f-d6586725e080",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shout",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "6e4fcb78-052b-460d-9432-e8297fdf50be",
                     "path": "<Joystick>/stick",
                     "interactions": "",
@@ -64,6 +107,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "83dbab38-7296-4369-b9ca-02211d5f3c3d",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveN",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b7fa211b-7702-4591-b69a-82da73946176",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveS",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3a295d9c-c4cc-4e8e-b6cd-7397d624501a",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveE",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "98267860-0930-4ba4-8000-17d5d0a3d662",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveW",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -148,8 +148,8 @@ MonoBehaviour:
   dangerColor: {r: 1, g: 0.8898754, b: 0.2679245, a: 0.2784314}
   attackingColor: {r: 0.6981132, g: 0, b: 0, a: 0.84705883}
   state: 0
-  dangerTime: 2.5
-  attackingTime: 2
+  dangerTime: 2
+  attackingTime: 1.2
   returningTime: 1.8
 --- !u!114 &7905525464233245644
 MonoBehaviour:
@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4223eed1d5ed0154f88d97a78dcaa5a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectsInsideArea: []
 --- !u!1 &8726632202848343911
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,7 +7,8 @@ using UnityEngine.Animations;
 public class Player : MonoBehaviour
 {
     PlayerControls controls;
-    Vector2 move;
+    float horizontal;
+    float vertical;
 
     Animator animator;
     int walkingHsh = Animator.StringToHash("walking");
@@ -38,20 +39,29 @@ public class Player : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
 
         controls.Gameplay.Shout.performed += ctx => Shout();
-        controls.Gameplay.Move.performed += ctx => move = ctx.ReadValue<Vector2>();
-        controls.Gameplay.Move.canceled += ctx => move = Vector2.zero;
+        controls.Gameplay.Move.performed += ctx => { Vector2 move = ctx.ReadValue<Vector2>(); horizontal = move.x; vertical = move.y; };
+        controls.Gameplay.Move.canceled += ctx => { horizontal = 0; vertical = 0; };
+
+        controls.Gameplay.MoveN.performed += ctx => vertical = 1;
+        controls.Gameplay.MoveN.canceled += ctx => vertical = 0;
+        controls.Gameplay.MoveS.performed += ctx => vertical = -1;
+        controls.Gameplay.MoveS.canceled += ctx => vertical = 0;
+        controls.Gameplay.MoveW.performed += ctx => horizontal = 1;
+        controls.Gameplay.MoveW.canceled += ctx => horizontal = 0;
+        controls.Gameplay.MoveE.performed += ctx => horizontal = -1;
+        controls.Gameplay.MoveE.canceled += ctx => horizontal = 0;
     }
 
     private void Update() {
         if (cooldown > 0) cooldown -= Time.deltaTime;
         else cooldown = 0;
 
-        if (move == Vector2.zero) {
+        if (horizontal == 0 && vertical == 0) {
             animator.SetBool(walkingHsh, false);
             return;
         }
         else animator.SetBool(walkingHsh, true);
-        Vector3 l = new Vector3(-move.x, 0, -move.y);
+        Vector3 l = new Vector3(-horizontal, 0, -vertical);
         transform.Translate(l * Time.deltaTime * moveSpeed, Space.World);
 
         Quaternion targetL = Quaternion.LookRotation(l, Vector3.up);
