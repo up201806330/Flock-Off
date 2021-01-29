@@ -51,10 +51,9 @@ public class Player : MonoBehaviour
             return;
         }
         else animator.SetBool(walkingHsh, true);
-        Vector3 m = new Vector3(-move.x, 0, -move.y) * Time.deltaTime * moveSpeed;
-        transform.Translate(m, Space.World);
-
         Vector3 l = new Vector3(-move.x, 0, -move.y);
+        transform.Translate(l * Time.deltaTime * moveSpeed, Space.World);
+
         Quaternion targetL = Quaternion.LookRotation(l, Vector3.up);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetL, Time.deltaTime * rotSpeed);
     }
@@ -65,7 +64,7 @@ public class Player : MonoBehaviour
             CameraShake.Shake(shakeTime, shakeAmount);
             //foreach(Collider x in Physics.OverlapSphere(transform.position, shoutRadius)) {
             //    if (x.gameObject.tag == "Entity") x.GetComponent<Rigidbody>().AddForce(x.transform.position - transform.position, ForceMode.Impulse);
-            //}
+            //} 
             cooldown = cooldownAmount;
         }
     }

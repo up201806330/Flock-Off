@@ -19,6 +19,8 @@ public class Sheep : MonoBehaviour
     float hitDistance;
     [SerializeField]
     float pushForce;
+    [SerializeField]
+    float maxVelocity;
 
     public int nNeighbors;
 
@@ -38,6 +40,7 @@ public class Sheep : MonoBehaviour
     void Update()
     {
         if (dead) return;
+        if (rb.velocity.magnitude > maxVelocity) rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxVelocity);
 
         // Calculating neighbor sheep
         nNeighbors = 0;
@@ -68,7 +71,7 @@ public class Sheep : MonoBehaviour
         }
     }
     private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.tag == "Edge" && scared && !dead) {
+        if (other.tag == "Edge" && scared && !dead) {
             navMeshAgent.enabled = false;                // Disable AI
             rb.constraints = RigidbodyConstraints.None;  // Enable "ragdoll"
             rb.velocity = transform.forward * pushForce; // Apply push

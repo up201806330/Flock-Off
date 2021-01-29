@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Edge
   - Entity
+  - Sheep
   layers:
   - Default
   - TransparentFX

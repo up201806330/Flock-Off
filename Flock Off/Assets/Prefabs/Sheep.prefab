@@ -103,6 +103,7 @@ MonoBehaviour:
   range: 2
   hitDistance: 1
   pushForce: 6
+  maxVelocity: 5
   nNeighbors: 0
   scared: 1
 --- !u!95 &9221703305907397572
