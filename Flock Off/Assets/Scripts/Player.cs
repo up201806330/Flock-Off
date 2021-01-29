@@ -66,6 +66,7 @@ public class Player : MonoBehaviour
             //    if (x.gameObject.tag == "Entity") x.GetComponent<Rigidbody>().AddForce(x.transform.position - transform.position, ForceMode.Impulse);
             //} 
             cooldown = cooldownAmount;
+            // [SFX] Bark (random sound from list of 3 or 4 barks)
         }
     }
 

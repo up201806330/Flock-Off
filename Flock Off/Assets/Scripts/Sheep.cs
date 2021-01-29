@@ -24,8 +24,6 @@ public class Sheep : MonoBehaviour
 
     public int nNeighbors;
 
-    [SerializeField]
-    bool scared = false;
     bool dead = false;
 
     // Start is called before the first frame update
@@ -71,12 +69,21 @@ public class Sheep : MonoBehaviour
         }
     }
     private void OnTriggerEnter(Collider other) {
-        if (other.tag == "Edge" && scared && !dead) {
-            navMeshAgent.enabled = false;                // Disable AI
-            rb.constraints = RigidbodyConstraints.None;  // Enable "ragdoll"
-            rb.velocity = transform.forward * pushForce; // Apply push
-            //Debug.Log(rb.velocity);
+        if (other.tag == "Edge") {
+            kill(true);
+        }
+    }
+
+    public void kill(bool pushedOff) {
+        if (!dead) {
+            if (pushedOff) {
+                rb.constraints = RigidbodyConstraints.None;  // Enable "ragdoll"
+                rb.velocity = transform.forward * pushForce; // Apply push
+            }
+            else Destroy(rb);
+            navMeshAgent.enabled = false;                    // Disable AI
             dead = true;
+            // [SFX] Bahh here (random from list of 2 or 3 sounds)
         }
     }
 }

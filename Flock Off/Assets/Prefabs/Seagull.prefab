@@ -150,7 +150,7 @@ MonoBehaviour:
   state: 0
   dangerTime: 2.5
   attackingTime: 2
-  returningTime: 3
+  returningTime: 1.8
 --- !u!114 &7905525464233245644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +186,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8726632202848343911}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.1084373, y: -0.23942871, z: 0.020364404}
   m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_Children:
