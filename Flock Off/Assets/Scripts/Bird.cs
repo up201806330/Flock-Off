@@ -41,6 +41,8 @@ public class Bird : MonoBehaviour
 
     GameObject targetSheep = null;
     Vector3 startingBirdPos = Vector3.zero;
+    Quaternion startingBirdRot = Quaternion.identity;
+    Quaternion reachedBirdRot = Quaternion.identity;
     Vector3 reachedBirdPos = Vector3.zero;
     Vector3 startingAreaPos = Vector3.zero;
     Vector3 reachedAreaPos = Vector3.zero;
@@ -88,8 +90,8 @@ public class Bird : MonoBehaviour
                 obj.transform.position = rotationCenter + l;
 
                 // Looking at new position
-                Quaternion targetL = Quaternion.LookRotation(l, Vector3.up);
-                obj.transform.rotation = Quaternion.Lerp(obj.transform.rotation, targetL, Time.deltaTime * 8);
+                Quaternion targetL = Quaternion.LookRotation(l) * Quaternion.AngleAxis(-90, Vector3.up);
+                obj.transform.rotation = Quaternion.Lerp(obj.transform.rotation, targetL, Time.deltaTime * 8);;
                 break;
 
             case State.danger:
@@ -106,7 +108,7 @@ public class Bird : MonoBehaviour
                 obj.transform.position = rotationCenter + l;
 
                 // Looking at new position
-                targetL = Quaternion.LookRotation(l, Vector3.up);
+                targetL = Quaternion.LookRotation(l) * Quaternion.AngleAxis(-90, Vector3.up);
                 obj.transform.rotation = Quaternion.Lerp(obj.transform.rotation, targetL, Time.deltaTime * 8);
 
                 if (area.getObjectsInside().Count == 0) {
@@ -140,6 +142,7 @@ public class Bird : MonoBehaviour
                         return;
                     }
                     startingBirdPos = obj.transform.position;
+                    startingBirdRot = obj.transform.rotation;
                 }
 
                 else if (!area.isInside(targetSheep)) { // Target has left the area
@@ -150,13 +153,15 @@ public class Bird : MonoBehaviour
                     reachedAreaPos = areaObj.transform.position;
                 }
 
+                // Bird looking toward target and descending
                 Quaternion targetAng = Quaternion.LookRotation(targetSheep.transform.position - obj.transform.position);
-                obj.transform.rotation = Quaternion.Lerp(obj.transform.rotation, Quaternion.Inverse(targetAng), Time.deltaTime * 2);
+                obj.transform.rotation = Quaternion.Lerp(startingBirdRot, targetAng, stateTimer / attackingTime * 2.5f);
                 obj.transform.position = Vector3.Lerp(startingBirdPos, targetSheep.transform.position, stateTimer / attackingTime);
 
-                //Debug.DrawRay(obj.transform.position, obj.transform.rotation.eulerAngles, Color.blue);
+                Debug.DrawRay(obj.transform.position, obj.transform.forward, Color.blue);
                 //Debug.DrawRay(obj.transform.position, Quaternion.Inverse(targetAng).eulerAngles, Color.red);
 
+                // Area shrinking and moving
                 areaObj.transform.position = Vector3.Lerp(startingAreaPos, targetSheep.transform.position - new Vector3(0, 0.25f, 0), stateTimer / attackingTime / 1.2f);
                 areaObj.transform.localScale = Vector3.Lerp(startingAreaScale, new Vector3(0, 0, 0), stateTimer / attackingTime / 1.2f);
 
@@ -178,7 +183,7 @@ public class Bird : MonoBehaviour
 
                 obj.transform.position = Vector3.Lerp(reachedBirdPos, rotationCenter + l, stateTimer / returningTime*2);
 
-                targetL = Quaternion.LookRotation(l, Vector3.up);
+                targetL = Quaternion.LookRotation(l) * Quaternion.AngleAxis(-90, Vector3.up);
                 obj.transform.rotation = Quaternion.Lerp(obj.transform.rotation, targetL, Time.deltaTime);
 
                 if (stateTimer >= returningTime) { // Played till the end, go next phase
@@ -201,7 +206,7 @@ public class Bird : MonoBehaviour
                 areaObj.transform.position = Vector3.Lerp(reachedAreaPos, startingAreaPos, stateTimer / returningTime);
                 areaObj.transform.localScale = Vector3.Lerp(reachedAreaScale, startingAreaScale, stateTimer / returningTime);
 
-                targetL = Quaternion.LookRotation(l, Vector3.up);
+                targetL = Quaternion.LookRotation(l) * Quaternion.AngleAxis(-90, Vector3.up);
                 obj.transform.rotation = Quaternion.Lerp(obj.transform.rotation, targetL, Time.deltaTime);
 
                 if (stateTimer >= returningTime) { // Played till the end, go next phase
@@ -211,8 +216,7 @@ public class Bird : MonoBehaviour
                 break;
 
             case State.grabbed:
-                // [SFX] Bahh here (random from list of 2 or 3 sounds)
-                if (targetSheep.transform.parent == null && areaObj.transform.localScale != Vector3.zero) {
+                if (isDirectChild(orchestrator.transform, targetSheep.transform) && areaObj.transform.localScale != Vector3.zero) {
                     targetSheep.transform.SetParent(obj.transform);
                     targetSheep.GetComponent<Sheep>().kill(false);
                     areaObj.transform.localScale = Vector3.zero;
@@ -224,7 +228,6 @@ public class Bird : MonoBehaviour
                 targetL = Quaternion.LookRotation(l, Vector3.up);
                 obj.transform.rotation = Quaternion.Lerp(obj.transform.rotation, targetL, Time.deltaTime);
 
-                StartCoroutine(waitAndMarkDead());
                 break;
 
             default:
@@ -242,8 +245,8 @@ public class Bird : MonoBehaviour
         }
     }
 
-    IEnumerator waitAndMarkDead() {
-        yield return new WaitForSeconds(2f);
-        orchestrator.markDead(gameObject);
+    bool isDirectChild(Transform parent, Transform child) {
+        foreach (Transform x in parent) if (x == child) return true;
+        return false;
     }
 }

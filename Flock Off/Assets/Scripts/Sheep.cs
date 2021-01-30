@@ -76,6 +76,8 @@ public class Sheep : MonoBehaviour
         }
         else if (other.tag == "Fence") {
             orchestrator.markSurvived(gameObject);
+            navMeshAgent.enabled = false;
+            // [SFX] Pling here
         }
     }
 
@@ -88,7 +90,7 @@ public class Sheep : MonoBehaviour
             else Destroy(rb);
             navMeshAgent.enabled = false;                    // Disable AI
             dead = true;
-            float time = pushedOff ? 0.8f : 2f;
+            float time = pushedOff ? 0.8f : 0f;
             StartCoroutine(waitAndMarkDead(time));
             // [SFX] Bahh here (random from list of 2 or 3 sounds)
         }
