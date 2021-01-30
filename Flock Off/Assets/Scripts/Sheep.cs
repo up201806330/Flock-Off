@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Sheep : MonoBehaviour
+public class Sheep : MonoBehaviour 
 {
+    Orchestrator orchestrator;
+
     NavMeshAgent navMeshAgent;
     Animator animator;
     int wlkHash = Animator.StringToHash("walking");
@@ -26,9 +28,9 @@ public class Sheep : MonoBehaviour
 
     bool dead = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    private void Awake() {
+        orchestrator = GetComponentInParent<Orchestrator>();
+
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
@@ -72,6 +74,9 @@ public class Sheep : MonoBehaviour
         if (other.tag == "Edge") {
             kill(true);
         }
+        else if (other.tag == "Fence") {
+            orchestrator.markSurvived(gameObject);
+        }
     }
 
     public void kill(bool pushedOff) {
@@ -83,7 +88,14 @@ public class Sheep : MonoBehaviour
             else Destroy(rb);
             navMeshAgent.enabled = false;                    // Disable AI
             dead = true;
+            float time = pushedOff ? 0.8f : 2f;
+            StartCoroutine(waitAndMarkDead(time));
             // [SFX] Bahh here (random from list of 2 or 3 sounds)
         }
+    }
+
+    IEnumerator waitAndMarkDead(float time) {
+        yield return new WaitForSeconds(time);
+        orchestrator.markDead(gameObject);
     }
 }

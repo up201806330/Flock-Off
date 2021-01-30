@@ -6,6 +6,8 @@ using UnityEngine.Animations;
 
 public class Player : MonoBehaviour
 {
+    Orchestrator orchestrator;
+
     PlayerControls controls;
     float horizontal;
     float vertical;
@@ -35,6 +37,8 @@ public class Player : MonoBehaviour
     float rotSpeed = 1f;
 
     private void Awake() {
+        orchestrator = GetComponentInParent<Orchestrator>();
+
         controls = new PlayerControls();
         animator = GetComponentInChildren<Animator>();
 

@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class Bird : MonoBehaviour
 {
+    Orchestrator orchestrator;
+
     GameObject obj;
     GameObject areaObj;
     Area area;
@@ -58,8 +60,9 @@ public class Bird : MonoBehaviour
 
     }
 
-    void Awake()
-    {
+    void Awake() {
+        orchestrator = GetComponentInParent<Orchestrator>();
+
         obj = transform.GetChild(0).gameObject;
         areaObj = transform.GetChild(1).gameObject;
         area = GetComponent<Area>();
@@ -220,6 +223,8 @@ public class Bird : MonoBehaviour
 
                 targetL = Quaternion.LookRotation(l, Vector3.up);
                 obj.transform.rotation = Quaternion.Lerp(obj.transform.rotation, targetL, Time.deltaTime);
+
+                StartCoroutine(waitAndMarkDead());
                 break;
 
             default:
@@ -235,5 +240,10 @@ public class Bird : MonoBehaviour
             stateTimer = 0;
             // [SFX] First cackawww~~~ 
         }
+    }
+
+    IEnumerator waitAndMarkDead() {
+        yield return new WaitForSeconds(2f);
+        orchestrator.markDead(gameObject);
     }
 }
