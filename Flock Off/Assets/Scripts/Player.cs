@@ -8,6 +8,11 @@ public class Player : MonoBehaviour
 {
     Orchestrator orchestrator;
 
+    AudioSource audio;
+
+    [SerializeField]
+    AudioClip[] sounds;
+
     PlayerControls controls;
     float horizontal;
     float vertical;
@@ -54,6 +59,8 @@ public class Player : MonoBehaviour
         controls.Gameplay.MoveW.canceled += ctx => horizontal = 0;
         controls.Gameplay.MoveE.performed += ctx => horizontal = -1;
         controls.Gameplay.MoveE.canceled += ctx => horizontal = 0;
+
+        audio = GetComponent<AudioSource>();
     }
 
     private void Update() {
@@ -80,7 +87,10 @@ public class Player : MonoBehaviour
             //    if (x.gameObject.tag == "Entity") x.GetComponent<Rigidbody>().AddForce(x.transform.position - transform.position, ForceMode.Impulse);
             //} 
             cooldown = cooldownAmount;
-            // [SFX] Bark (random sound from list of 3 or 4 barks)
+
+            int nSound = UnityEngine.Random.Range(0, 4);
+            audio.clip = sounds[nSound];
+            audio.Play();
         }
     }
 

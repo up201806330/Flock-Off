@@ -7,6 +7,11 @@ public class Bird : MonoBehaviour
 {
     Orchestrator orchestrator;
 
+    AudioSource audio;
+
+    [SerializeField]
+    AudioClip[] sounds;
+
     GameObject obj;
     GameObject areaObj;
     Area area;
@@ -73,6 +78,8 @@ public class Bird : MonoBehaviour
         startingAreaScale = areaObj.transform.localScale;
         startingAreaPos = areaObj.transform.position;
         rotationCenter = obj.transform.position;
+
+        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -118,7 +125,9 @@ public class Bird : MonoBehaviour
                 if (stateTimer >= dangerTime) { // Played till the end, go next phase
                     state = State.attacking;
                     stateTimer = 0;
-                    // [SFX] Attacking cackaww~~
+
+                    audio.clip = sounds[2];
+                    audio.Play();
                 }
                 break;
 
@@ -238,7 +247,10 @@ public class Bird : MonoBehaviour
             area.add(other);
             state = State.danger;
             stateTimer = 0;
-            // [SFX] First cackawww~~~ 
+            
+            
+            audio.clip = sounds[1];
+            audio.Play();
         }
     }
 

@@ -7,6 +7,11 @@ public class Sheep : MonoBehaviour
 {
     Orchestrator orchestrator;
 
+    AudioSource audio;
+
+    [SerializeField]
+    AudioClip[] sounds;
+
     NavMeshAgent navMeshAgent;
     Animator animator;
     int wlkHash = Animator.StringToHash("walking");
@@ -34,6 +39,8 @@ public class Sheep : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
+
+        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -76,6 +83,10 @@ public class Sheep : MonoBehaviour
         }
         else if (other.tag == "Fence") {
             orchestrator.markSurvived(gameObject);
+            navMeshAgent.enabled = false;
+
+            audio.clip = sounds[4];
+            audio.Play();
         }
     }
 
@@ -90,7 +101,10 @@ public class Sheep : MonoBehaviour
             dead = true;
             float time = pushedOff ? 0.8f : 2f;
             StartCoroutine(waitAndMarkDead(time));
-            // [SFX] Bahh here (random from list of 2 or 3 sounds)
+
+            int nSound = UnityEngine.Random.Range(0, 4);
+            audio.clip = sounds[nSound];
+            audio.Play();
         }
     }
 
