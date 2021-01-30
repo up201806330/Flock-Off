@@ -12,6 +12,11 @@ public class Bird : MonoBehaviour
     Area area;
     MeshRenderer areaMesh;
 
+    Animator animator;
+    int dangerHsh = Animator.StringToHash("danger");
+    int grabbedHsh = Animator.StringToHash("grabbed");
+    int attackingHsh = Animator.StringToHash("attacking");
+
     [Header("Circle Motion")]
     [SerializeField]
     float width;
@@ -75,6 +80,8 @@ public class Bird : MonoBehaviour
         startingAreaScale = areaObj.transform.localScale;
         startingAreaPos = areaObj.transform.position;
         rotationCenter = obj.transform.position;
+
+        animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -82,6 +89,7 @@ public class Bird : MonoBehaviour
     {
         switch (state) {
             case State.idle:
+                Debug.DrawRay(obj.transform.position, -obj.transform.right, Color.blue);
                 // Timer increments
                 circleMotionCounter += Time.deltaTime;
 
@@ -90,13 +98,13 @@ public class Bird : MonoBehaviour
                 obj.transform.position = rotationCenter + l;
 
                 // Looking at new position
-                Quaternion targetL = Quaternion.LookRotation(l) * Quaternion.AngleAxis(-90, Vector3.up);
+                Quaternion targetL = Quaternion.LookRotation(l);
                 obj.transform.rotation = Quaternion.Lerp(obj.transform.rotation, targetL, Time.deltaTime * 8);;
                 break;
 
             case State.danger:
                 // Timer increments
-                circleMotionCounter += Time.deltaTime;
+                circleMotionCounter += Time.deltaTime * 1.4f;
                 stateTimer += Time.deltaTime;
 
                 // Update Color
@@ -108,18 +116,20 @@ public class Bird : MonoBehaviour
                 obj.transform.position = rotationCenter + l;
 
                 // Looking at new position
-                targetL = Quaternion.LookRotation(l) * Quaternion.AngleAxis(-90, Vector3.up);
+                targetL = Quaternion.LookRotation(l);
                 obj.transform.rotation = Quaternion.Lerp(obj.transform.rotation, targetL, Time.deltaTime * 8);
 
                 if (area.getObjectsInside().Count == 0) {
-                    stateTimer = 0;
-                    state = State.returningFromDanger;
+                    state = State.returningFromDanger;  // State
+                    animator.SetBool(dangerHsh, false); // Animator parameter
+                    stateTimer = 0;                     // Timer reset
                     reachedBirdPos = obj.transform.position;
                 }
 
                 if (stateTimer >= dangerTime) { // Played till the end, go next phase
-                    state = State.attacking;
-                    stateTimer = 0;
+                    state = State.attacking;              // State
+                    animator.SetBool(attackingHsh, true); // Animator parameter
+                    stateTimer = 0;                       // Timer reset
                     // [SFX] Attacking cackaww~~
                 }
                 break;
@@ -136,8 +146,10 @@ public class Bird : MonoBehaviour
                     targetSheep = area.getRandomInside();
                     // Debug.Log(area.getObjectsInside());
                     if (targetSheep == null) {
-                        stateTimer = 0;
-                        state = State.returningFromDanger;
+                        state = State.returningFromDanger;  // State
+                        animator.SetBool(dangerHsh, false); // Animator parameter
+                        animator.SetBool(attackingHsh, false);
+                        stateTimer = 0;                     // Timer reset
                         reachedBirdPos = obj.transform.position;
                         return;
                     }
@@ -146,27 +158,32 @@ public class Bird : MonoBehaviour
                 }
 
                 else if (!area.isInside(targetSheep)) { // Target has left the area
-                    state = State.returningFromAttack;
-                    stateTimer = 0;
+                    state = State.returningFromAttack;  // State
+                    animator.SetBool(dangerHsh, false); // Animator parameter
+                    animator.SetBool(attackingHsh, false);
+                    stateTimer = 0;                     // Timer reset
                     reachedBirdPos = obj.transform.position;
                     reachedAreaScale = areaObj.transform.localScale;
                     reachedAreaPos = areaObj.transform.position;
                 }
 
                 // Bird looking toward target and descending
-                Quaternion targetAng = Quaternion.LookRotation(targetSheep.transform.position - obj.transform.position);
-                obj.transform.rotation = Quaternion.Lerp(startingBirdRot, targetAng, stateTimer / attackingTime * 2.5f);
-                obj.transform.position = Vector3.Lerp(startingBirdPos, targetSheep.transform.position, stateTimer / attackingTime);
+                Quaternion targetAng = Quaternion.LookRotation(targetSheep.transform.position - obj.transform.position)*Quaternion.Euler(0,90,0);
+                //if (targetAng.eulerAngles.z != 0) targetAng.eulerAngles = new Vector3(targetAng.eulerAngles.x, targetAng.eulerAngles.y, 0); // Lock Z axis
+                obj.transform.rotation = Quaternion.RotateTowards(obj.transform.rotation, targetAng, Time.deltaTime * 500);
 
-                Debug.DrawRay(obj.transform.position, obj.transform.forward, Color.blue);
+                if (stateTimer / attackingTime >= 0.4f) obj.transform.position = Vector3.Lerp(startingBirdPos, targetSheep.transform.position, ((stateTimer/ attackingTime) - 0.4f )* 2f );
+
+                Debug.DrawRay(obj.transform.position, -obj.transform.right, Color.blue);
                 //Debug.DrawRay(obj.transform.position, Quaternion.Inverse(targetAng).eulerAngles, Color.red);
 
                 // Area shrinking and moving
                 areaObj.transform.position = Vector3.Lerp(startingAreaPos, targetSheep.transform.position - new Vector3(0, 0.25f, 0), stateTimer / attackingTime / 1.2f);
                 areaObj.transform.localScale = Vector3.Lerp(startingAreaScale, new Vector3(0, 0, 0), stateTimer / attackingTime / 1.2f);
 
-                if (stateTimer >= attackingTime) { // Played till the end, go next phase
-                    state = State.grabbed;
+                if (stateTimer >= attackingTime - 0.25f) { // Played till the end, go next phase
+                    state = State.grabbed;              // State
+                    animator.SetBool(grabbedHsh, true); // Animator parameter
                 }
 
                 break;
@@ -183,7 +200,7 @@ public class Bird : MonoBehaviour
 
                 obj.transform.position = Vector3.Lerp(reachedBirdPos, rotationCenter + l, stateTimer / returningTime*2);
 
-                targetL = Quaternion.LookRotation(l) * Quaternion.AngleAxis(-90, Vector3.up);
+                targetL = Quaternion.LookRotation(l);
                 obj.transform.rotation = Quaternion.Lerp(obj.transform.rotation, targetL, Time.deltaTime);
 
                 if (stateTimer >= returningTime) { // Played till the end, go next phase
@@ -206,7 +223,7 @@ public class Bird : MonoBehaviour
                 areaObj.transform.position = Vector3.Lerp(reachedAreaPos, startingAreaPos, stateTimer / returningTime);
                 areaObj.transform.localScale = Vector3.Lerp(reachedAreaScale, startingAreaScale, stateTimer / returningTime);
 
-                targetL = Quaternion.LookRotation(l) * Quaternion.AngleAxis(-90, Vector3.up);
+                targetL = Quaternion.LookRotation(l);
                 obj.transform.rotation = Quaternion.Lerp(obj.transform.rotation, targetL, Time.deltaTime);
 
                 if (stateTimer >= returningTime) { // Played till the end, go next phase
@@ -225,8 +242,8 @@ public class Bird : MonoBehaviour
                 l = startingBirdPos - reachedBirdPos;
                 obj.transform.position += (l.normalized/7);
 
-                targetL = Quaternion.LookRotation(l, Vector3.up);
-                obj.transform.rotation = Quaternion.Lerp(obj.transform.rotation, targetL, Time.deltaTime);
+                targetL = Quaternion.LookRotation(l);
+                obj.transform.rotation = Quaternion.Lerp(obj.transform.rotation, Quaternion.Inverse(targetL), Time.deltaTime);
 
                 break;
 
@@ -241,6 +258,7 @@ public class Bird : MonoBehaviour
             area.add(other);
             state = State.danger;
             stateTimer = 0;
+            animator.SetBool(dangerHsh, true);
             // [SFX] First cackawww~~~ 
         }
     }
