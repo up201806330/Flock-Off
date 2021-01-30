@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Bear : MonoBehaviour
 {
+    AudioSource audio;
+
+    [SerializeField]
+    AudioClip[] sounds;
+
     Animator animator;
     int attackingHsh = Animator.StringToHash("attacking");
 
@@ -21,6 +26,8 @@ public class Bear : MonoBehaviour
         obj = transform.GetChild(0).gameObject;
         animator = obj.GetComponent<Animator>();
         hitbox = GetComponent<Collider>();
+
+        audio = GetComponent<AudioSource>();
     }
 
     private void Update() {
@@ -28,6 +35,11 @@ public class Bear : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
+
+        int nSound = UnityEngine.Random.Range(0, 2);
+        audio.clip = sounds[nSound];
+        audio.Play();
+
         if (other.tag == "Entity" && other.GetComponent<Sheep>() != null) {
             if (counter <= 0 && !animator.GetBool(attackingHsh)) {
                 counter = cooldownTime;
@@ -45,5 +57,7 @@ public class Bear : MonoBehaviour
     public void grabSheep() {
         targetSheep.transform.SetParent(obj.transform);
         targetSheep.GetComponent<Sheep>().kill(false);
+        audio.clip = sounds[2];
+        audio.Play();
     }
 }

@@ -7,6 +7,11 @@ public class Bird : MonoBehaviour
 {
     Orchestrator orchestrator;
 
+    AudioSource audio;
+
+    [SerializeField]
+    AudioClip[] sounds;
+
     GameObject obj;
     GameObject areaObj;
     Area area;
@@ -82,6 +87,7 @@ public class Bird : MonoBehaviour
         rotationCenter = obj.transform.position;
 
         animator = GetComponentInChildren<Animator>();
+        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -131,6 +137,9 @@ public class Bird : MonoBehaviour
                     animator.SetBool(attackingHsh, true); // Animator parameter
                     stateTimer = 0;                       // Timer reset
                     // [SFX] Attacking cackaww~~
+
+                    audio.clip = sounds[2];
+                    audio.Play();
                 }
                 break;
 
@@ -259,7 +268,9 @@ public class Bird : MonoBehaviour
             state = State.danger;
             stateTimer = 0;
             animator.SetBool(dangerHsh, true);
-            // [SFX] First cackawww~~~ 
+            
+            audio.clip = sounds[1];
+            audio.Play();
         }
     }
 
