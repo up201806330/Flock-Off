@@ -99,7 +99,7 @@ public class Sheep : MonoBehaviour
             else Destroy(rb);
             navMeshAgent.enabled = false;                    // Disable AI
             dead = true;
-            float time = pushedOff ? 0.8f : 2f;
+            float time = pushedOff ? 0.8f : 0f;
             StartCoroutine(waitAndMarkDead(time));
 
             int nSound = UnityEngine.Random.Range(0, 4);
