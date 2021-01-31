@@ -16,6 +16,7 @@ public class Orchestrator : MonoBehaviour
     int liveBears = 0;
 
     public Rumbler rumbler;
+    public LevelLoader levelLoader;
 
     private void Start() {
         for (int i = 0; i < transform.childCount; i++) {
@@ -30,6 +31,7 @@ public class Orchestrator : MonoBehaviour
         UICounter.setRight(liveSheep);
 
         rumbler = GetComponent<Rumbler>();
+        levelLoader = GetComponentInChildren<LevelLoader>();
     }
 
     public void markDead(GameObject x) {

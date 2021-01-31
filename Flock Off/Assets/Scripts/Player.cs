@@ -45,6 +45,9 @@ public class Player : MonoBehaviour
     float counter = 0;
     public float shoutRange;
 
+    bool restarting = false;
+    float restartCounter = 0;
+
     private void Awake() {
         orchestrator = GetComponentInParent<Orchestrator>();
 
@@ -64,10 +67,22 @@ public class Player : MonoBehaviour
         controls.Gameplay.MoveE.performed += ctx => horizontal = -1;
         controls.Gameplay.MoveE.canceled += ctx => horizontal = 0;
 
+        controls.Gameplay.Restart.performed += ctx => restarting = true;
+        controls.Gameplay.Restart.canceled += ctx => restarting = false;
+
         audio = GetComponent<AudioSource>();
     }
 
     private void Update() {
+        if (restarting) {
+            if (restartCounter < 1.5f) restartCounter += Time.deltaTime;
+            else {
+                restartCounter = 0;
+                orchestrator.levelLoader.reload();
+            }
+        }
+        else if (restartCounter != 0) restartCounter = 0;
+
         if (counter >= 0 && shoutRange != 0) counter -= Time.deltaTime;
         else if (shoutRange != 0) shoutRange = 0;
 
