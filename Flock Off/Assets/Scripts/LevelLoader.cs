@@ -5,12 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
-    Animator animator;
+    Animator[] animators;
     [SerializeField]
     float duration;
 
     private void Awake() {
-        animator = GetComponentInChildren<Animator>();
+        animators = GetComponentsInChildren<Animator>();
     }
 
     public void reload() {
@@ -22,7 +22,7 @@ public class LevelLoader : MonoBehaviour
     }
 
     IEnumerator loadIndex(int index) {
-        animator.SetTrigger("Start");
+        foreach(Animator animator in animators) animator.SetTrigger("Start");
 
         yield return new WaitForSeconds(duration);
 
