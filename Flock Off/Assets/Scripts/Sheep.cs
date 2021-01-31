@@ -13,12 +13,13 @@ public class Sheep : MonoBehaviour
     AudioClip[] sounds;
 
     NavMeshAgent navMeshAgent;
-    Animator animator;
-    int wlkHash = Animator.StringToHash("walking");
+    public Animator animator;
+    int walkHsh = Animator.StringToHash("walking");
+    int grabbedHsh = Animator.StringToHash("grabbed");
     Rigidbody rb;
 
-    [SerializeField]
     GameObject player;
+    Player playerScript;
     [Header("Stats")]
     [SerializeField]
     float range;
@@ -28,10 +29,13 @@ public class Sheep : MonoBehaviour
     float pushForce;
     [SerializeField]
     float maxVelocity;
+    [SerializeField]
+    float minDistance;
 
-    public int nNeighbors;
+    int nNeighbors;
 
     bool dead = false;
+    bool saved = false;
 
     private void Awake() {
         orchestrator = GetComponentInParent<Orchestrator>();
@@ -41,13 +45,18 @@ public class Sheep : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         audio = GetComponent<AudioSource>();
+
+        player = GameObject.FindGameObjectsWithTag("Player")[0];
+        playerScript = player.GetComponent<Player>();
     }
 
     // Update is called once per frame
     void Update()
     {
         if (dead) return;
+        else if (transform.position.y < -5) kill(true);
         if (rb.velocity.magnitude > maxVelocity) rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxVelocity);
+
 
         // Calculating neighbor sheep
         nNeighbors = 0;
@@ -61,20 +70,26 @@ public class Sheep : MonoBehaviour
         if (nNeighbors > 1) {
             sumDestination /= nNeighbors;
             navMeshAgent.destination = sumDestination;
+            if (Vector3.Distance(transform.position, navMeshAgent.destination) <= minDistance)
+                navMeshAgent.isStopped = true;
+            else navMeshAgent.isStopped = false;
+
         }
+        else navMeshAgent.isStopped = false;
+
 
         float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance <= range) {
+        if (distance <= range + playerScript.shoutRange) {
             Vector3 dirToPlayer = transform.position - player.transform.position;
             Vector3 newPos = transform.position + dirToPlayer * 0.75f;
 
             if (Vector3.Distance(newPos, transform.position) > 5) newPos = transform.position;
 
             navMeshAgent.SetDestination(newPos);
-            if (!animator.GetBool(wlkHash)) animator.SetBool(wlkHash, true);
+            if (!animator.GetBool(walkHsh)) animator.SetBool(walkHsh, true);
         }
         else {
-            animator.SetBool(wlkHash, false);
+            animator.SetBool(walkHsh, false);
         }
     }
     private void OnTriggerEnter(Collider other) {
@@ -82,9 +97,10 @@ public class Sheep : MonoBehaviour
             kill(true);
         }
         else if (other.tag == "Fence") {
+            if (saved) return;
             orchestrator.markSurvived(gameObject);
-            navMeshAgent.enabled = false;
-
+            StartCoroutine(waitAndDisableNav());
+            saved = true;
             audio.clip = sounds[4];
             audio.Play();
         }
@@ -111,5 +127,10 @@ public class Sheep : MonoBehaviour
     IEnumerator waitAndMarkDead(float time) {
         yield return new WaitForSeconds(time);
         orchestrator.markDead(gameObject);
+    }
+
+    IEnumerator waitAndDisableNav() {
+        yield return new WaitForSeconds(1.5f);
+        navMeshAgent.enabled = false;
     }
 }

@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Flock Off/Assets/Scenes/MainMenu.unity.meta
 guid: 7633404f6870cb54eb59bfc33dcc82fa
 DefaultImporter:
+=======
+guid: 6e6b7b35f6f8f9743ab20132eb64ce99
+PrefabImporter:
+>>>>>>> 7c0356dd6d9e4d9a48b589063f65f76ce578184e:Flock Off/Assets/Prefabs/LevelLoader.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

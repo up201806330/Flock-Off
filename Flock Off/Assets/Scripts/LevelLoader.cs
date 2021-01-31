@@ -5,18 +5,27 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
+    Animator animator;
+    [SerializeField]
+    float duration;
 
-    // Update is called once per frame
-    void Update()
-    {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    LoadNextLevel();
-        //}
+    private void Awake() {
+        animator = GetComponentInChildren<Animator>();
     }
 
-    public void LoadNextLevel()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    public void reload() {
+        StartCoroutine(loadIndex(SceneManager.GetActiveScene().buildIndex));
+    }
+
+    public void nextLevel() {
+        StartCoroutine(loadIndex(SceneManager.GetActiveScene().buildIndex + 1));
+    }
+
+    IEnumerator loadIndex(int index) {
+        animator.SetTrigger("Start");
+
+        yield return new WaitForSeconds(duration);
+
+        SceneManager.LoadScene(index);
     }
 }

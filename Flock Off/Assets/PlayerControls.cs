@@ -65,6 +65,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Restart"",
+                    ""type"": ""Button"",
+                    ""id"": ""7e242f2e-56f4-429e-96d1-036f3de9b87e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -166,6 +174,39 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""MoveW"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""32540cf9-0c1a-4c35-a5a4-45d258d92983"",
+                    ""path"": ""<Joystick>/trigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b0c20688-c75a-4525-a3a7-efc93d4bd918"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f160957e-9371-4b80-a534-a1ae5d8d450c"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -180,6 +221,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_MoveS = m_Gameplay.FindAction("MoveS", throwIfNotFound: true);
         m_Gameplay_MoveE = m_Gameplay.FindAction("MoveE", throwIfNotFound: true);
         m_Gameplay_MoveW = m_Gameplay.FindAction("MoveW", throwIfNotFound: true);
+        m_Gameplay_Restart = m_Gameplay.FindAction("Restart", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -235,6 +277,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_MoveS;
     private readonly InputAction m_Gameplay_MoveE;
     private readonly InputAction m_Gameplay_MoveW;
+    private readonly InputAction m_Gameplay_Restart;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -245,6 +288,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @MoveS => m_Wrapper.m_Gameplay_MoveS;
         public InputAction @MoveE => m_Wrapper.m_Gameplay_MoveE;
         public InputAction @MoveW => m_Wrapper.m_Gameplay_MoveW;
+        public InputAction @Restart => m_Wrapper.m_Gameplay_Restart;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -272,6 +316,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @MoveW.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveW;
                 @MoveW.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveW;
                 @MoveW.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoveW;
+                @Restart.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRestart;
+                @Restart.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRestart;
+                @Restart.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRestart;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -294,6 +341,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @MoveW.started += instance.OnMoveW;
                 @MoveW.performed += instance.OnMoveW;
                 @MoveW.canceled += instance.OnMoveW;
+                @Restart.started += instance.OnRestart;
+                @Restart.performed += instance.OnRestart;
+                @Restart.canceled += instance.OnRestart;
             }
         }
     }
@@ -306,5 +356,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnMoveS(InputAction.CallbackContext context);
         void OnMoveE(InputAction.CallbackContext context);
         void OnMoveW(InputAction.CallbackContext context);
+        void OnRestart(InputAction.CallbackContext context);
     }
 }

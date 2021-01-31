@@ -41,6 +41,13 @@ public class Player : MonoBehaviour
     [SerializeField]
     float rotSpeed = 1f;
 
+    float shoutDuration;
+    float counter = 0;
+    public float shoutRange;
+
+    bool restarting = false;
+    float restartCounter = 0;
+
     private void Awake() {
         orchestrator = GetComponentInParent<Orchestrator>();
 
@@ -60,10 +67,30 @@ public class Player : MonoBehaviour
         controls.Gameplay.MoveE.performed += ctx => horizontal = -1;
         controls.Gameplay.MoveE.canceled += ctx => horizontal = 0;
 
+        controls.Gameplay.Restart.performed += ctx => restarting = true;
+        controls.Gameplay.Restart.canceled += ctx => restarting = false;
+
         audio = GetComponent<AudioSource>();
     }
 
     private void Update() {
+        if (restarting) {
+            if (restartCounter < 1.5f) restartCounter += Time.deltaTime;
+            else {
+                restartCounter = 0;
+                orchestrator.levelLoader.reload();
+            }
+        }
+        else if (restartCounter != 0) restartCounter = 0;
+
+        if (counter >= 0 && shoutRange != 0) counter -= Time.deltaTime;
+        else if (shoutRange != 0) shoutRange = 0;
+
+        if (transform.position.y < -5f) {
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            transform.localPosition = new Vector3(0, 5, 0);
+        }
+
         if (cooldown > 0) cooldown -= Time.deltaTime;
         else cooldown = 0;
 
@@ -83,12 +110,12 @@ public class Player : MonoBehaviour
         if (cooldown == 0) {
             animator.SetBool(shoutHsh, true);
             CameraShake.Shake(shakeTime, shakeAmount);
-            //foreach(Collider x in Physics.OverlapSphere(transform.position, shoutRadius)) {
-            //    if (x.gameObject.tag == "Entity") x.GetComponent<Rigidbody>().AddForce(x.transform.position - transform.position, ForceMode.Impulse);
-            //} 
+            orchestrator.rumbler.RumblePulse(0.5f, 0.5f, 0.25f, 0.5f);
+            shoutDuration = 0.2f;
+            shoutRange = shoutRadius;
             cooldown = cooldownAmount;
 
-            int nSound = UnityEngine.Random.Range(0, 4);
+            int nSound = Random.Range(0, 4);
             audio.clip = sounds[nSound];
             audio.Play();
         }
