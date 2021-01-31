@@ -12,8 +12,6 @@ public class Bear : MonoBehaviour
     Animator animator;
     int attackingHsh = Animator.StringToHash("attacking");
 
-    Collider hitbox;
-
     GameObject obj;
     GameObject targetSheep;
 
@@ -25,7 +23,6 @@ public class Bear : MonoBehaviour
     private void Awake() {
         obj = transform.GetChild(0).gameObject;
         animator = obj.GetComponent<Animator>();
-        hitbox = GetComponent<Collider>();
 
         audio = GetComponent<AudioSource>();
     }
@@ -55,7 +52,7 @@ public class Bear : MonoBehaviour
     }
 
     public void grabSheep() {
-        targetSheep.transform.SetParent(obj.transform);
+        targetSheep.transform.SetParent(obj.transform.GetChild(0));
         targetSheep.GetComponent<Sheep>().kill(false);
         audio.clip = sounds[2];
         audio.Play();

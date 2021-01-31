@@ -33,6 +33,7 @@ public class Sheep : MonoBehaviour
     public int nNeighbors;
 
     bool dead = false;
+    bool saved = false;
 
     private void Awake() {
         orchestrator = GetComponentInParent<Orchestrator>();
@@ -83,9 +84,10 @@ public class Sheep : MonoBehaviour
             kill(true);
         }
         else if (other.tag == "Fence") {
+            if (saved) return;
             orchestrator.markSurvived(gameObject);
             StartCoroutine(waitAndDisableNav());
-
+            saved = true;
             audio.clip = sounds[4];
             audio.Play();
         }
