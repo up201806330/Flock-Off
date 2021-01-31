@@ -30,7 +30,7 @@ public class Cutscene : MonoBehaviour
         CanvasGroup previous = images[index - 1];
         CanvasGroup current = images[index];
         while (previous.alpha > 0 && current.alpha < 1) {
-            if (index != 7) previous.alpha -= Time.deltaTime;
+            if (index != 7 && index != 1) previous.alpha -= Time.deltaTime;
             current.alpha += Time.deltaTime;
             yield return new WaitForSeconds(0.02f);
         }

@@ -300,6 +300,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6611244805911488409, guid: 27bdddcd38946f64fb8c520164ec30ab, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c00f9c6cc9e6cf94eb97264a1c27c09e, type: 2}
     - target: {fileID: 919132149155446097, guid: 27bdddcd38946f64fb8c520164ec30ab, type: 3}
       propertyPath: m_Name
       value: DoggoBarking
