@@ -526,7 +526,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 312628929}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -551,7 +551,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2508735412912091769, guid: cd46907724b9a704088e46e8e8672df8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2508735412912091774, guid: cd46907724b9a704088e46e8e8672df8, type: 3}
       propertyPath: m_RootOrder
@@ -1428,7 +1428,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34706d2b351d34e4f96cb00e2f138a8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rumbler: {fileID: 0}
   levelLoader: {fileID: 0}
 --- !u!114 &1379324737
 MonoBehaviour:
