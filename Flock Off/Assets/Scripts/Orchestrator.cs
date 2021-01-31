@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Orchestrator : MonoBehaviour
 {
     Counter UICounter;
+    BGSoundScript soundtrack;
 
     int liveSheep = 0;
     int survivedSheep = 0;
@@ -27,14 +29,20 @@ public class Orchestrator : MonoBehaviour
             if (x.tag == "UI") UICounter = x.GetComponentInChildren<Counter>();
         }
 
-        UICounter.setLeft(survivedSheep);
-        UICounter.setRight(liveSheep);
+        if (UICounter != null) {
+            UICounter.setLeft(survivedSheep);
+            UICounter.setRight(liveSheep);
+        }
 
         rumbler = GetComponent<Rumbler>();
         levelLoader = GetComponentInChildren<LevelLoader>();
+
+        soundtrack = GetDontDestroyOnLoadObjects()[0].GetComponent<BGSoundScript>();
+        Debug.Log(soundtrack);
     }
 
     public void markDead(GameObject x) {
+        if (UICounter == null) return;
         if (x.GetComponent<Sheep>() != null) { 
             liveSheep--; deadSheep++;
             UICounter.setRight(liveSheep);
@@ -48,6 +56,7 @@ public class Orchestrator : MonoBehaviour
     }
 
     public void markSurvived(GameObject x) {
+        if (UICounter == null) return;
         if (x.GetComponent<Sheep>() != null) { 
             survivedSheep++;
             UICounter.setLeft(survivedSheep);
@@ -61,7 +70,26 @@ public class Orchestrator : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         // [SFX]
         yield return new WaitForSeconds(0.5f);
+        Debug.Log(SceneManager.GetActiveScene().buildIndex);
+        if (SceneManager.GetActiveScene().buildIndex == 0) soundtrack.fade();
         levelLoader.nextLevel();
     }
 
+
+    public static GameObject[] GetDontDestroyOnLoadObjects() {
+        GameObject temp = null;
+        try {
+            temp = new GameObject();
+            Object.DontDestroyOnLoad(temp);
+            UnityEngine.SceneManagement.Scene dontDestroyOnLoad = temp.scene;
+            Object.DestroyImmediate(temp);
+            temp = null;
+
+            return dontDestroyOnLoad.GetRootGameObjects();
+        }
+        finally {
+            if (temp != null)
+                Object.DestroyImmediate(temp);
+        }
+    }
 }
