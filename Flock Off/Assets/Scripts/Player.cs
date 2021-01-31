@@ -41,6 +41,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     float rotSpeed = 1f;
 
+    float shoutDuration;
+    float counter = 0;
+    public float shoutRange;
+
     private void Awake() {
         orchestrator = GetComponentInParent<Orchestrator>();
 
@@ -64,6 +68,9 @@ public class Player : MonoBehaviour
     }
 
     private void Update() {
+        if (counter >= 0 && shoutRange != 0) counter -= Time.deltaTime;
+        else if (shoutRange != 0) shoutRange = 0;
+
         if (transform.position.y < -5f) {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             transform.localPosition = new Vector3(0, 5, 0);
@@ -88,12 +95,12 @@ public class Player : MonoBehaviour
         if (cooldown == 0) {
             animator.SetBool(shoutHsh, true);
             CameraShake.Shake(shakeTime, shakeAmount);
-            //foreach(Collider x in Physics.OverlapSphere(transform.position, shoutRadius)) {
-            //    if (x.gameObject.tag == "Entity") x.GetComponent<Rigidbody>().AddForce(x.transform.position - transform.position, ForceMode.Impulse);
-            //} 
+            orchestrator.rumbler.RumblePulse(0.5f, 0.5f, 0.25f, 0.5f);
+            shoutDuration = 0.2f;
+            shoutRange = shoutRadius;
             cooldown = cooldownAmount;
 
-            int nSound = UnityEngine.Random.Range(0, 4);
+            int nSound = Random.Range(0, 4);
             audio.clip = sounds[nSound];
             audio.Play();
         }

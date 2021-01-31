@@ -12505,6 +12505,7 @@ GameObject:
   m_Component:
   - component: {fileID: 866448470}
   - component: {fileID: 866448471}
+  - component: {fileID: 866448472}
   m_Layer: 0
   m_Name: Orchestrator
   m_TagString: Untagged
@@ -12545,6 +12546,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 34706d2b351d34e4f96cb00e2f138a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rumbler: {fileID: 0}
+--- !u!114 &866448472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866448469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26af218993ff4714dac05d1227fe6a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &868100759
