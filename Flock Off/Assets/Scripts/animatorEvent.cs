@@ -13,6 +13,7 @@ public class animatorEvent : MonoBehaviour
     }
 
     public void resetShout() {
+        Debug.Log(player);
         if (player != null) player.resetShout();
     }
 

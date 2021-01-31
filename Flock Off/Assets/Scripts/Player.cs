@@ -122,6 +122,7 @@ public class Player : MonoBehaviour
 
     public void resetShout() {
         animator.SetBool(shoutHsh, false);
+        Debug.Log("HEREEEEE");
     }
 
     private void OnEnable() {

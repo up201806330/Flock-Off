@@ -3,6 +3,7 @@
 ###
 [Aa]ssets/AssetStoreTools*
 [Bb]uild/
+[Bb]uilds/
 [Ll]ibrary/
 [Ll]ocal[Cc]ache/
 [Oo]bj/
@@ -42,3 +43,4 @@ sysinfo.txt
 Icon?
 ehthumbs.db
 *.log
+

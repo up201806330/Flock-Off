@@ -16,9 +16,7 @@ public class BGSoundScript : MonoBehaviour
         get { return instance; }
     }
 
-    private void Update() {
-        Debug.Log(sources[1].volume);
-    }
+    
 
     void Awake()
     {
@@ -39,7 +37,6 @@ public class BGSoundScript : MonoBehaviour
     }
 
     public void fade() {
-        Debug.Log("HEr");
         StartCoroutine(fadeC());
     }
 
