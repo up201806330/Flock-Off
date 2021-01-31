@@ -35,10 +35,12 @@ public class BGSoundScript : MonoBehaviour
     }
 
     public void fade() {
+        Debug.Log("HEr");
         StartCoroutine(fadeC());
     }
 
     IEnumerator fadeC() {
+        sources[1].Play();
         sources[0].volume -= Time.deltaTime / factor;
         if (sources[1].volume <= maxVol) sources[1].volume -= Time.deltaTime / factor;
         yield return new WaitForSeconds(0.1f);

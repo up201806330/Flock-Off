@@ -109,7 +109,7 @@ public class Player : MonoBehaviour
         if (cooldown == 0) {
             animator.SetBool(shoutHsh, true);
             CameraShake.Shake(shakeTime, shakeAmount);
-            orchestrator.rumbler.RumblePulse(0.5f, 0.5f, 0.25f, 0.5f);
+            //orchestrator.rumbler.RumblePulse(0.5f, 0.5f, 0.25f, 0.5f);
             shoutDuration = 0.2f;
             shoutRange = shoutRadius;
             cooldown = cooldownAmount;
