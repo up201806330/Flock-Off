@@ -13,8 +13,9 @@ public class Sheep : MonoBehaviour
     AudioClip[] sounds;
 
     NavMeshAgent navMeshAgent;
-    Animator animator;
-    int wlkHash = Animator.StringToHash("walking");
+    public Animator animator;
+    int walkHsh = Animator.StringToHash("walking");
+    int grabbedHsh = Animator.StringToHash("grabbed");
     Rigidbody rb;
 
     [SerializeField]
@@ -71,10 +72,10 @@ public class Sheep : MonoBehaviour
             if (Vector3.Distance(newPos, transform.position) > 5) newPos = transform.position;
 
             navMeshAgent.SetDestination(newPos);
-            if (!animator.GetBool(wlkHash)) animator.SetBool(wlkHash, true);
+            if (!animator.GetBool(walkHsh)) animator.SetBool(walkHsh, true);
         }
         else {
-            animator.SetBool(wlkHash, false);
+            animator.SetBool(walkHsh, false);
         }
     }
     private void OnTriggerEnter(Collider other) {
@@ -83,7 +84,7 @@ public class Sheep : MonoBehaviour
         }
         else if (other.tag == "Fence") {
             orchestrator.markSurvived(gameObject);
-            navMeshAgent.enabled = false;
+            StartCoroutine(waitAndDisableNav());
 
             audio.clip = sounds[4];
             audio.Play();
@@ -111,5 +112,10 @@ public class Sheep : MonoBehaviour
     IEnumerator waitAndMarkDead(float time) {
         yield return new WaitForSeconds(time);
         orchestrator.markDead(gameObject);
+    }
+
+    IEnumerator waitAndDisableNav() {
+        yield return new WaitForSeconds(1.5f);
+        navMeshAgent.enabled = false;
     }
 }

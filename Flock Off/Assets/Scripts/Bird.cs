@@ -49,10 +49,9 @@ public class Bird : MonoBehaviour
     [SerializeField]
     float returningTime;
 
+    [SerializeField]
     GameObject targetSheep = null;
     Vector3 startingBirdPos = Vector3.zero;
-    Quaternion startingBirdRot = Quaternion.identity;
-    Quaternion reachedBirdRot = Quaternion.identity;
     Vector3 reachedBirdPos = Vector3.zero;
     Vector3 startingAreaPos = Vector3.zero;
     Vector3 reachedAreaPos = Vector3.zero;
@@ -67,9 +66,7 @@ public class Bird : MonoBehaviour
         attacking,
         returningFromDanger,
         returningFromAttack,
-
         grabbed
-
     }
 
     void Awake() {
@@ -95,9 +92,13 @@ public class Bird : MonoBehaviour
     {
         switch (state) {
             case State.idle:
-                Debug.DrawRay(obj.transform.position, -obj.transform.right, Color.blue);
+                //Debug.DrawRay(obj.transform.position, -obj.transform.right, Color.blue);
+
                 // Timer increments
                 circleMotionCounter += Time.deltaTime;
+
+                // Animator parameter
+                animator.SetBool(dangerHsh, false); 
 
                 // New position
                 Vector3 l = new Vector3(Mathf.Cos(circleMotionCounter) * width, 0, Mathf.Sin(circleMotionCounter) * height);
@@ -151,7 +152,7 @@ public class Bird : MonoBehaviour
                 areaMesh.material.color = Color.Lerp(dangerColor, attackingColor, stateTimer / attackingTime);
                 currColor = areaMesh.material.color;
 
-                if (targetSheep == null && startingBirdPos == Vector3.zero) {
+                if (targetSheep == null) {
                     targetSheep = area.getRandomInside();
                     // Debug.Log(area.getObjectsInside());
                     if (targetSheep == null) {
@@ -163,10 +164,10 @@ public class Bird : MonoBehaviour
                         return;
                     }
                     startingBirdPos = obj.transform.position;
-                    startingBirdRot = obj.transform.rotation;
                 }
 
                 else if (!area.isInside(targetSheep)) { // Target has left the area
+                    targetSheep = null;
                     state = State.returningFromAttack;  // State
                     animator.SetBool(dangerHsh, false); // Animator parameter
                     animator.SetBool(attackingHsh, false);
@@ -177,20 +178,19 @@ public class Bird : MonoBehaviour
                 }
 
                 // Bird looking toward target and descending
-                Quaternion targetAng = Quaternion.LookRotation(targetSheep.transform.position - obj.transform.position)*Quaternion.Euler(0,90,0);
-                //if (targetAng.eulerAngles.z != 0) targetAng.eulerAngles = new Vector3(targetAng.eulerAngles.x, targetAng.eulerAngles.y, 0); // Lock Z axis
+                Quaternion targetAng = Quaternion.LookRotation(targetSheep.transform.position - obj.transform.position) * Quaternion.Euler(0, 90, 0);
                 obj.transform.rotation = Quaternion.RotateTowards(obj.transform.rotation, targetAng, Time.deltaTime * 500);
 
                 if (stateTimer / attackingTime >= 0.4f) obj.transform.position = Vector3.Lerp(startingBirdPos, targetSheep.transform.position, ((stateTimer/ attackingTime) - 0.4f )* 2f );
 
-                Debug.DrawRay(obj.transform.position, -obj.transform.right, Color.blue);
-                //Debug.DrawRay(obj.transform.position, Quaternion.Inverse(targetAng).eulerAngles, Color.red);
+                // Debug.DrawRay(obj.transform.position, -obj.transform.right, Color.blue);
+                // Debug.DrawRay(obj.transform.position, Quaternion.Inverse(targetAng).eulerAngles, Color.red);
 
                 // Area shrinking and moving
                 areaObj.transform.position = Vector3.Lerp(startingAreaPos, targetSheep.transform.position - new Vector3(0, 0.25f, 0), stateTimer / attackingTime / 1.2f);
                 areaObj.transform.localScale = Vector3.Lerp(startingAreaScale, new Vector3(0, 0, 0), stateTimer / attackingTime / 1.2f);
 
-                if (stateTimer >= attackingTime - 0.25f) { // Played till the end, go next phase
+                if (stateTimer >= attackingTime - 0.05f) { // Played till the end, go next phase
                     state = State.grabbed;              // State
                     animator.SetBool(grabbedHsh, true); // Animator parameter
                 }
@@ -206,11 +206,9 @@ public class Bird : MonoBehaviour
                 areaMesh.material.color = Color.Lerp(currColor, idleColor, stateTimer / returningTime);
 
                 l = new Vector3(Mathf.Cos(circleMotionCounter) * width, 0, Mathf.Sin(circleMotionCounter) * height);
-
-                obj.transform.position = Vector3.Lerp(reachedBirdPos, rotationCenter + l, stateTimer / returningTime*2);
-
                 targetL = Quaternion.LookRotation(l);
-                obj.transform.rotation = Quaternion.Lerp(obj.transform.rotation, targetL, Time.deltaTime);
+                obj.transform.position = rotationCenter + l;
+                obj.transform.rotation = Quaternion.RotateTowards(obj.transform.rotation, targetL, Time.deltaTime * 100);
 
                 if (stateTimer >= returningTime) { // Played till the end, go next phase
                     state = State.idle;
@@ -223,17 +221,19 @@ public class Bird : MonoBehaviour
                 circleMotionCounter += Time.deltaTime;
                 stateTimer += Time.deltaTime;
 
+                // Animator parameter
+                animator.SetBool(dangerHsh, true);
+
                 // Update Color
                 areaMesh.material.color = Color.Lerp(currColor, idleColor, stateTimer / returningTime);
 
-                l = new Vector3(Mathf.Cos(circleMotionCounter) * width, 0, Mathf.Sin(circleMotionCounter) * height);
-
-                obj.transform.position = Vector3.Lerp(reachedBirdPos, rotationCenter + l, stateTimer / returningTime);
                 areaObj.transform.position = Vector3.Lerp(reachedAreaPos, startingAreaPos, stateTimer / returningTime);
                 areaObj.transform.localScale = Vector3.Lerp(reachedAreaScale, startingAreaScale, stateTimer / returningTime);
 
+                l = new Vector3(Mathf.Cos(circleMotionCounter) * width, 0, Mathf.Sin(circleMotionCounter) * height);
                 targetL = Quaternion.LookRotation(l);
-                obj.transform.rotation = Quaternion.Lerp(obj.transform.rotation, targetL, Time.deltaTime);
+                obj.transform.position = Vector3.Lerp(reachedBirdPos, rotationCenter + l, stateTimer / returningTime);
+                obj.transform.rotation = Quaternion.RotateTowards(obj.transform.rotation, targetL, Time.deltaTime * 100);
 
                 if (stateTimer >= returningTime) { // Played till the end, go next phase
                     state = State.idle;
@@ -244,15 +244,20 @@ public class Bird : MonoBehaviour
             case State.grabbed:
                 if (isDirectChild(orchestrator.transform, targetSheep.transform) && areaObj.transform.localScale != Vector3.zero) {
                     targetSheep.transform.SetParent(obj.transform);
-                    targetSheep.GetComponent<Sheep>().kill(false);
+                    targetSheep.transform.localPosition = new Vector3(0.6f, -0.6f, -0.1f);
+                    targetSheep.transform.localRotation = Quaternion.Euler(-15, 0, 0);
+                    Sheep sheepScript = targetSheep.GetComponent<Sheep>();
+                    sheepScript.kill(false);
+                    sheepScript.animator.SetBool(grabbedHsh, true);
                     areaObj.transform.localScale = Vector3.zero;
                     GetComponent<Collider>().enabled = false;
                 }
-                l = startingBirdPos - reachedBirdPos;
-                obj.transform.position += (l.normalized/7);
+                l = startingBirdPos - reachedBirdPos - new Vector3(0,5,0);
+                l = Quaternion.AngleAxis(180, Vector3.up) * l;
 
                 targetL = Quaternion.LookRotation(l);
-                obj.transform.rotation = Quaternion.Lerp(obj.transform.rotation, Quaternion.Inverse(targetL), Time.deltaTime);
+                obj.transform.rotation = Quaternion.RotateTowards(obj.transform.rotation, targetL*Quaternion.Euler(-30, 90, 0), Time.deltaTime * 50);
+                obj.transform.position += (l.normalized / 10);
 
                 break;
 

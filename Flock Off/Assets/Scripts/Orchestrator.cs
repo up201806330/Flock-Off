@@ -39,7 +39,7 @@ public class Orchestrator : MonoBehaviour
 
     public void markSurvived(GameObject x) {
         if (x.GetComponent<Sheep>() != null) { 
-            liveSheep--; survivedSheep++;
+            survivedSheep++;
             UICounter.setLeft(survivedSheep);
         }
     }

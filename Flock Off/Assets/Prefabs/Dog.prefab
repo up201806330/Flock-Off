@@ -53,7 +53,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c84b8f9e3ceeec14eb7e0212270877a7, type: 3}
   - {fileID: 8300000, guid: d04d4ddc1b30eea48ba046b81683ea54, type: 3}
   cooldown: 0
-  cooldownAmount: 1
+  cooldownAmount: 0.7
   factor: 1
   shakeTime: 0.15
   shakeAmount: 0.2

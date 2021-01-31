@@ -64,6 +64,11 @@ public class Player : MonoBehaviour
     }
 
     private void Update() {
+        if (transform.position.y < -5f) {
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            transform.localPosition = new Vector3(0, 5, 0);
+        }
+
         if (cooldown > 0) cooldown -= Time.deltaTime;
         else cooldown = 0;
 
