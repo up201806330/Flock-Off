@@ -38,6 +38,11 @@ public class Orchestrator : MonoBehaviour
         if (x.GetComponent<Sheep>() != null) { 
             liveSheep--; deadSheep++;
             UICounter.setRight(liveSheep);
+
+            if (liveSheep == 0) levelLoader.reload();
+            else if (liveSheep == survivedSheep) {
+                StartCoroutine(nextLevel());
+            }
         }
         if (x.GetComponent<Bird>() != null) { liveEagles--; deadEagles++; }
     }
@@ -46,7 +51,17 @@ public class Orchestrator : MonoBehaviour
         if (x.GetComponent<Sheep>() != null) { 
             survivedSheep++;
             UICounter.setLeft(survivedSheep);
+            if (liveSheep == survivedSheep) {
+                StartCoroutine(nextLevel());
+            }
         }
+    }
+
+    IEnumerator nextLevel() {
+        yield return new WaitForSeconds(0.5f);
+        // [SFX]
+        yield return new WaitForSeconds(0.5f);
+        levelLoader.nextLevel();
     }
 
 }

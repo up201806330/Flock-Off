@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
 
     private void Update() {
         if (restarting) {
-            if (restartCounter < 1.5f) restartCounter += Time.deltaTime;
+            if (restartCounter < 1f) restartCounter += Time.deltaTime;
             else {
                 restartCounter = 0;
                 orchestrator.levelLoader.reload();
@@ -87,8 +87,7 @@ public class Player : MonoBehaviour
         else if (shoutRange != 0) shoutRange = 0;
 
         if (transform.position.y < -5f) {
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
-            transform.localPosition = new Vector3(0, 5, 0);
+            orchestrator.levelLoader.reload();
         }
 
         if (cooldown > 0) cooldown -= Time.deltaTime;

@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class BGSoundScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    AudioSource[] sources;
+    [SerializeField]
+    float factor;
+    float maxVol;
 
     // Play Global
     private static BGSoundScript instance = null;
@@ -19,6 +18,9 @@ public class BGSoundScript : MonoBehaviour
 
     void Awake()
     {
+        sources = GetComponents<AudioSource>();
+        maxVol = sources[1].volume;
+        sources[1].volume = 0;
         if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
@@ -32,9 +34,13 @@ public class BGSoundScript : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void fade() {
+        StartCoroutine(fadeC());
+    }
+
+    IEnumerator fadeC() {
+        sources[0].volume -= Time.deltaTime / factor;
+        if (sources[1].volume <= maxVol) sources[1].volume -= Time.deltaTime / factor;
+        yield return new WaitForSeconds(0.1f);
     }
 }
