@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class Orchestrator : MonoBehaviour
 {
     Counter UICounter;
-    BGSoundScript soundtrack;
 
     int liveSheep = 0;
     int survivedSheep = 0;
@@ -36,9 +35,6 @@ public class Orchestrator : MonoBehaviour
 
         rumbler = GetComponent<Rumbler>();
         levelLoader = GetComponentInChildren<LevelLoader>();
-
-        soundtrack = GetDontDestroyOnLoadObjects()[0].GetComponent<BGSoundScript>();
-        Debug.Log(soundtrack);
     }
 
     public void markDead(GameObject x) {
@@ -70,26 +66,6 @@ public class Orchestrator : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         // [SFX]
         yield return new WaitForSeconds(0.5f);
-        Debug.Log(SceneManager.GetActiveScene().buildIndex);
-        if (SceneManager.GetActiveScene().buildIndex == 0) soundtrack.fade();
         levelLoader.nextLevel();
-    }
-
-
-    public static GameObject[] GetDontDestroyOnLoadObjects() {
-        GameObject temp = null;
-        try {
-            temp = new GameObject();
-            Object.DontDestroyOnLoad(temp);
-            UnityEngine.SceneManagement.Scene dontDestroyOnLoad = temp.scene;
-            Object.DestroyImmediate(temp);
-            temp = null;
-
-            return dontDestroyOnLoad.GetRootGameObjects();
-        }
-        finally {
-            if (temp != null)
-                Object.DestroyImmediate(temp);
-        }
     }
 }

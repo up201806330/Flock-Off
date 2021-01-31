@@ -16,6 +16,10 @@ public class BGSoundScript : MonoBehaviour
         get { return instance; }
     }
 
+    private void Update() {
+        Debug.Log(sources[1].volume);
+    }
+
     void Awake()
     {
         sources = GetComponents<AudioSource>();
@@ -41,8 +45,10 @@ public class BGSoundScript : MonoBehaviour
 
     IEnumerator fadeC() {
         sources[1].Play();
-        sources[0].volume -= Time.deltaTime / factor;
-        if (sources[1].volume <= maxVol) sources[1].volume -= Time.deltaTime / factor;
-        yield return new WaitForSeconds(0.1f);
+        while (sources[1].volume < maxVol && sources[0].volume > 0) {
+            sources[0].volume -= Time.deltaTime / factor;
+            sources[1].volume += Time.deltaTime / factor;
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }
