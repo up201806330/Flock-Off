@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 147501424}
   - component: {fileID: 147501426}
   m_Layer: 5
-  m_Name: Panel1 (2)
+  m_Name: 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -487,7 +487,7 @@ GameObject:
   - component: {fileID: 312628932}
   - component: {fileID: 312628931}
   m_Layer: 5
-  m_Name: Panel1 (5)
+  m_Name: 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -526,7 +526,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 312628929}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -890,7 +890,7 @@ GameObject:
   - component: {fileID: 855314271}
   - component: {fileID: 855314273}
   m_Layer: 5
-  m_Name: Panel1 (1)
+  m_Name: 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1218,7 +1218,7 @@ GameObject:
   - component: {fileID: 1136028345}
   - component: {fileID: 1136028347}
   m_Layer: 5
-  m_Name: Panel1 (4)
+  m_Name: 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1306,7 +1306,7 @@ GameObject:
   - component: {fileID: 1208975963}
   - component: {fileID: 1208975962}
   m_Layer: 5
-  m_Name: Panel1 (6)
+  m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1606,12 +1606,10 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Code and Coordination- Rafael Ribeiro
 
-    
 
-    Soundtrack/SFX and
-    Level Design - Joao Sousa
+    Soundtrack/SFX and Level Design
+    - Joao Sousa
 
-    
 
     Animal Rigs and Bird Model - Joana Cartaxo'
   m_isRightToLeft: 0
@@ -1810,12 +1808,10 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Code and Coordination- Rafael Ribeiro
 
-    
 
-    Soundtrack/SFX and
-    Level Design - Joao Sousa
+    Soundtrack/SFX and Level Design
+    - Joao Sousa
 
-    
 
     Animal Rigs and Bird Model - Joana Cartaxo'
   m_isRightToLeft: 0
@@ -1907,7 +1903,7 @@ GameObject:
   - component: {fileID: 2116085006}
   - component: {fileID: 2116085008}
   m_Layer: 5
-  m_Name: Panel1
+  m_Name: 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1995,7 +1991,7 @@ GameObject:
   - component: {fileID: 2119315421}
   - component: {fileID: 2119315423}
   m_Layer: 5
-  m_Name: Panel1 (3)
+  m_Name: 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
