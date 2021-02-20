@@ -23,10 +23,14 @@ If you're having trouble with the Web build, try the Windows build [here](https:
 
 ## Controller / Gamepad
 `Left analog` Move
+
 `X` | `A` Bark
+
 `Δ` | `Y` (Hold) Restart level
 
 ## Keyboard
 `←` `↓` `↑` `→` Move
+
 `B` Bark
+
 `R` (Hold) Restart level
